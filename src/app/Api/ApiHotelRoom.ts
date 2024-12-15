@@ -1,0 +1,41 @@
+"use server";
+export async function GetAllHotelRoomByHotel(id: number) {
+  const res = await fetch(
+    `http://localhost:8080/api/v1/hotels/rooms/all/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  const data = await res.json();
+  return data;
+}
+export async function GetCreateHotelRoomForHotel(HotelId: any, datas: any) {
+  const queryParams = new URLSearchParams({
+    hotelId: HotelId,
+  });
+  const res = await fetch(
+    `http://localhost:8080/api/v1/hotels/rooms/create?${queryParams}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+      body: JSON.stringify(datas),
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  const data = await res.text();
+  return data;
+}
